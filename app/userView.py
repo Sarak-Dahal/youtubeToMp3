@@ -37,9 +37,7 @@ def download():
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
             ydl.download([url])
-            print("hiiiiiiiiii iam hereeeeeeeeeeeeeeeeee")
-            print("hiiiiiiiiii iam hereeeeeeeeeeeeeeeeee")
-            print("hiiiiiiiiii iam hereeeeeeeeeeeeeeeeee")
+
             print(ydl_opts)
         except DownloadError:
             arr = os.listdir('downloads/')
