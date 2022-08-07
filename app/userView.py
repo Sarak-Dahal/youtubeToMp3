@@ -26,7 +26,7 @@ def download():
     url = request.form['query']
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': 'downloads/%(title)s.%(ext)s',
+        'outtmpl': 'app/app/downloads/%(title)s.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
