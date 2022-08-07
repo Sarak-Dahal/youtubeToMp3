@@ -14,10 +14,10 @@ def home():
 
 @app.route('/download', methods=['POST'])
 def download():
-    arr = os.listdir('app/app/downloads/')
+    arr = os.listdir('downloads/')
     if len(arr) != 0:
         file = arr[0]
-        file_path = r'app/app/downloads/' + file
+        file_path = r'downloads/' + file
         if os.path.isfile(file_path):
             os.remove(file_path)
             print("File has been deleted")
@@ -26,7 +26,7 @@ def download():
     url = request.form['query']
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': 'app/app/downloads/%(title)s.%(ext)s',
+        'outtmpl': 'downloads/%(title)s.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -37,9 +37,8 @@ def download():
         try:
             ydl.download([url])
         except DownloadError:
-            arr = os.listdir('app/app/downloads/')
+            arr = os.listdir('downloads/')
             file = arr[0]
             print("Exception has been caught.")
-        return send_file(r'downloads/' + file, as_attachment=True)
-
+        return send_file(r'youtubeToMp3\downloads/' + file, as_attachment=True)
     return render_template('index.html')
