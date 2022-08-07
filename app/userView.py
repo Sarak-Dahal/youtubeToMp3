@@ -40,6 +40,6 @@ def download():
             arr = os.listdir('downloads/')
             file = arr[0]
             print("Exception has been caught.")
-            return send_file(r'youtubeToMp3\downloads/' + file, as_attachment=True)
+            #return send_file(r'youtubeToMp3\downloads/' + file, as_attachment=True)
 
     return render_template('index.html')
