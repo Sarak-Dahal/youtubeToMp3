@@ -23,6 +23,7 @@ def download():
             print("File has been deleted")
         else:
             print("File does not exist")
+    print("hiiiiiiiiii iam hereeeeeeeeeeeeeeeeee")
     url = request.form['query']
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -36,6 +37,7 @@ def download():
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         try:
             ydl.download([url])
+            print(ydl_opts)
         except DownloadError:
             arr = os.listdir('downloads/')
             file = arr[0]
