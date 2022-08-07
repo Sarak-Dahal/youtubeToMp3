@@ -14,10 +14,10 @@ def home():
 
 @app.route('/download', methods=['POST'])
 def download():
-    arr = os.listdir('downloads/')
+    arr = os.listdir('app/app/downloads/')
     if len(arr) != 0:
         file = arr[0]
-        file_path = r'downloads/' + file
+        file_path = r'app/app/downloads/' + file
         if os.path.isfile(file_path):
             os.remove(file_path)
             print("File has been deleted")
@@ -37,7 +37,7 @@ def download():
         try:
             ydl.download([url])
         except DownloadError:
-            arr = os.listdir('downloads/')
+            arr = os.listdir('app/app/downloads/')
             file = arr[0]
             print("Exception has been caught.")
         return send_file(r'downloads/' + file, as_attachment=True)
