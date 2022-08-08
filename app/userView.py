@@ -52,3 +52,4 @@ def download():
             print("Exception has been caught.")
             return send_file(filename + file, as_attachment=True)
     return render_template('index.html')
+
