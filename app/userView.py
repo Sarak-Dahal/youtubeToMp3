@@ -37,6 +37,12 @@ def twitchhome():
     source = 'Twitch'
     return render_template('index.html', tp=tp, source=source)
 
+@app.route('/download')
+def initial():
+    tp = 'Mp3'
+    source = 'YouTube'
+    return render_template('index.html', tp=tp, source=source)
+
 
 @app.route('/download', methods=['POST'])
 def get():
