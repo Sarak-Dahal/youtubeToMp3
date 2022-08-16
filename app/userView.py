@@ -37,51 +37,50 @@ def twitchhome():
     source = 'Twitch'
     return render_template('index.html', tp=tp, source=source)
 
-@app.route('/download')
-def initial():
-    tp = 'Mp3'
-    source = 'YouTube'
-    return render_template('index.html', tp=tp, source=source)
-
 
 @app.route('/download', methods=['POST'])
 def get():
-    arr = os.listdir(filename)
-    if len(arr) != 0:
-        file = arr[0]
-        file_path = filename + file
-        if os.path.isfile(file_path):
-            os.remove(file_path)
-            print("File has been deleted")
-        else:
-            print("File does not exist")
-
-    url = request.form['query']
-    typeFromHtml = request.form['tp']
-    if typeFromHtml == 'Mp3':
-        type = 'bestaudio/best'
-    elif typeFromHtml == 'Twitch' or typeFromHtml == 'Tiktok' or typeFromHtml == 'Mp4' or typeFromHtml == 'Video':
-        type = 'bestvideo[ext=mp4]+bestaudio[ext=mp4]/mp4+best[height<=480]'
-    else:
-        return render_template('index.html')
-    ydl_opts = {
-        'format': type,
-        'outtmpl': 'app/downloads/%(title)s.%(ext)s',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-    }
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        try:
-            ydl.download([url])
-        except DownloadError:
-            arr = os.listdir(filename)
+    if request.method=='POST':
+        arr = os.listdir(filename)
+        if len(arr) != 0:
             file = arr[0]
-            print("Exception has been caught.")
-            return send_file(filename + file, as_attachment=True)
-    return render_template('index.html')
+            file_path = filename + file
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+                print("File has been deleted")
+            else:
+                print("File does not exist")
+
+        url = request.form['query']
+        typeFromHtml = request.form['tp']
+        if typeFromHtml == 'Mp3':
+            type = 'bestaudio/best'
+        elif typeFromHtml == 'Twitch' or typeFromHtml == 'Tiktok' or typeFromHtml == 'Mp4' or typeFromHtml == 'Video':
+            type = 'bestvideo[ext=mp4]+bestaudio[ext=mp4]/mp4+best[height<=480]'
+        else:
+            return render_template('index.html')
+        ydl_opts = {
+            'format': type,
+            'outtmpl': 'app/downloads/%(title)s.%(ext)s',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            try:
+                ydl.download([url])
+            except DownloadError:
+                arr = os.listdir(filename)
+                file = arr[0]
+                print("Exception has been caught.")
+                return send_file(filename + file, as_attachment=True)
+        return render_template('index.html')
+    else:
+        tp = 'Mp3'
+        source = 'YouTube'
+        return render_template('index.html', tp=tp, source=source)
 
 
 @app.route('/mp4')
