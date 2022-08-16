@@ -38,9 +38,18 @@ def twitchhome():
     return render_template('index.html', tp=tp, source=source)
 
 
-@app.route('/download', methods=['POST'])
+@app.route('/download')
+def initial():
+    tp = 'Mp3'
+    source = 'YouTube'
+    return render_template('index.html', tp=tp, source=source)
+
+
+@app.route('/download', methods=['GET', 'POST'])
 def get():
-    if request.method=='POST':
+    print(request.method)
+    if request.method == 'POST' or request.method == 'GET':
+        print(request.method)
         arr = os.listdir(filename)
         if len(arr) != 0:
             file = arr[0]
